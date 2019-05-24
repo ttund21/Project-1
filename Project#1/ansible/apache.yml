@@ -1,0 +1,14 @@
+---
+- name: Subindo uma aplicacao web
+  hosts: homo
+
+  tasks:
+  - name: Baixando o apache
+    apt: name=apache2 state=latest update_cache=yes
+
+  - name: Subindo Servico
+    service: name=apache2 state=started enabled=yes
+    
+  - name: Importando pagina
+    template: src=templates/index.html dest=/var/www/html/index.html    
+                
