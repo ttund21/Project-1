@@ -1,7 +1,7 @@
 # Project#1
-Objetivo:
-Provisionar uma Instancia em três diferentes clouds(Azure, Google Cloud, AWS) e orquestrar uma aplicação web com Ansible. 
+Objetivo: <br>
+Provisionar uma Instancia em três clouds diferentes(Azure, Google Cloud, AWS) e orquestrar uma aplicação web com Ansible. 
 
 
-(Projeto Iniciante)
+(Projeto Iniciante) <br>
 (Projeto Básico)
