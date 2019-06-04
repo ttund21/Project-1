@@ -52,6 +52,28 @@
    }
    ```
    No azure para configurar o provider é um pouco diferente, primeiro você tem que <a href="https://docs.microsoft.com/pt-br/cli/azure/install-azure-cli?view=azure-cli-latest"> instalar a CLI do azure na sua maquina </a> , após a instalação você deve fazer o logon com terminal usando o comando <a href="https://docs.microsoft.com/pt-br/cli/azure/authenticate-azure-cli?view=azure-cli-latest"> az login </a> . Após fazer o login só adicionar uma versão linha version e usar o comando <b> terraform init </b>, para que o terraform baixe os plugins do provider.
+   
+   2.2. Agora devemos começar a criar as <i> maquinas virtuais e suas dependencias</i>: <br>
+    &nbsp; 2.2.1. Google Cloud: 
+    ```
+    resource "google_compute_instance" "ProjetoTerraform" {
+     name         = "projterra-vm-1"
+     machine_type = "f1-micro"
+     zone         = "southamerica-east1-b"
 
+     boot_disk {
+      initialize_params {
+      image = "debian-cloud/debian-9"
+      }
+     }
+
+     network_interface {
+      network   = "default"
+      access_config {
+      }
+     }
+    }
+
+    ```
 
 
