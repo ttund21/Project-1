@@ -75,5 +75,8 @@
     }
 
     ```
+    O recurso acima <a href="https://www.terraform.io/docs/providers/google/r/compute_instance.html">google_compute_instance</a> irá criar uma maquina virtual na Google Cloud.
+    
+    
 
 
