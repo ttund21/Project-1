@@ -129,31 +129,33 @@
     O recurso acima, <a href="https://www.terraform.io/docs/providers/aws/r/key_pair.html"> aws_key_pair </a> ,ele vai exportar sua chave pública para a ec2 criada.
     
     &nbsp;security_group.tf:
-  ```
-  resource "aws_security_group" "allow_ssh_http" {
-   name        = "allow_ssh_http"
-   description = "Abir entrada ssh e http"
-   vpc_id      = "vpc-4f0a5228"
+   ```
+    resource "aws_security_group" "allow_ssh_http" {
+      name        = "allow_ssh_http"
+      description = "Abir entrada ssh e http"
+      vpc_id      = "vpc-4f0a5228"
 
-   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-   }
+      ingress {
+       from_port   = 22
+       to_port     = 22
+       protocol    = "tcp"
+       cidr_blocks = ["0.0.0.0/0"]
+     }
 
-   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-   }
-   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-   }
-  }
-  ```
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; O recurso acima,<a href="https://www.terraform.io/docs/providers/aws/r/security_group.html"> aws_security_group </a> , vai configurar o firewall para que permita a entrada nas portas 22 e 80, e permitir a saida em qualquer porta. 
+     ingress {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+     }
+     egress {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+     }
+    }
+   ```
+    O recurso acima,<a href="https://www.terraform.io/docs/providers/aws/r/security_group.html"> aws_security_group </a> , vai configurar o firewall para que permita a entrada nas portas 22 e 80, e permitir a saida em qualquer porta.
+
+ 
