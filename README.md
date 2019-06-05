@@ -290,6 +290,13 @@
      address_space       = ["10.0.0.0/16"]
     }
     ```
-    O recurso acima,<a href="https://www.terraform.io/docs/providers/azurerm/r/virtual_network.html"> azurerm_virtual_network </a> , criará uma rede virtual. 
+    O recurso acima,<a href="https://www.terraform.io/docs/providers/azurerm/r/virtual_network.html"> azurerm_virtual_network </a> , criará uma rede virtual.
     
-    
+    <u>3. Usar o Terraform no terminal</u> <br>
+    &nbsp;3.1. Na mesma pasta aonde você criou seus arquivos digite os seguites comandos
+    <ul>
+    <li><a href="https://www.terraform.io/docs/commands/plan.html">terraform plan</a></li>
+    <i>Esse comando mostrará um plano de execução.</i>
+    <li><a href="https://www.terraform.io/docs/commands/apply.html">terraform apply</a></li>
+    <i>Esse comando irá aplicar as configurações</i>
+    </ul>
