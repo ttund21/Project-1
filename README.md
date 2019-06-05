@@ -54,9 +54,10 @@
    No azure para configurar o provider é um pouco diferente, primeiro você tem que <a href="https://docs.microsoft.com/pt-br/cli/azure/install-azure-cli?view=azure-cli-latest"> instalar a CLI do azure na sua maquina </a> , após a instalação você deve fazer o logon com terminal usando o comando <a href="https://docs.microsoft.com/pt-br/cli/azure/authenticate-azure-cli?view=azure-cli-latest"> az login </a> . Após fazer o login só adicionar uma versão linha version e usar o comando <b> terraform init </b>, para que o terraform baixe os plugins do provider.
    
    2.2. Agora devemos começar a criar as <i> maquinas virtuais e suas dependencias</i>: <br>
-    &nbsp; 2.2.1. Google Cloud: 
+    &nbsp; 2.2.1. Google Cloud:
     
-    &nbsp;&nbsp;vminstance.tf:
+    &nbsp;&nbsp;<b>vminstance.tf:</b>
+    
     ```
     resource "google_compute_instance" "ProjetoTerraform" {
      name         = "projterra-vm-1"
@@ -77,6 +78,7 @@
     }
 
     ```
+    
     O recurso acima, <a href="https://www.terraform.io/docs/providers/google/r/compute_instance.html">google_compute_instance</a> , irá criar uma maquina virtual na Google Cloud.
     
     &nbsp;&nbsp;metadata.tf:
@@ -102,7 +104,56 @@
 
      ```
      O recurso acima, <a href="https://www.terraform.io/docs/providers/google/r/compute_firewall.html"> google_compute_firewall </a> , vai habilitar o no firewall o trafego na porta 80.
-
     
+    &nbsp;2.2.2. AWS:
+    
+    &nbsp;ec2.tf:
+    ```   
+    resource "aws_instance" "ec2" {
+     ami                         = "ami-09f4cd7c0b533b081"
+     instance_type               = "t2.micro"
+     key_name                    = "${aws_key_pair.terraform.id}"
+     vpc_security_group_ids      = ["${aws_security_group.allow_ssh_http.id}"]
+     subnet_id                   = "subnet-52df0f09"
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/aws/r/instance.html"> aws_instance </a> , vai criar uma ec2 na AWS.
+    
+    &nbsp;ssh_key.tf:
+    ```
+    resource "aws_key_pair" "terraform" {
+     key_name   = "id_rsa"
+     public_key = "${file("~/.ssh/id_rsa.pub")}"
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/aws/r/key_pair.html"> aws_key_pair </a> ,ele vai exportar sua chave pública para a ec2 criada.
+    
+    &nbsp;security_group.tf:
+  ```
+  resource "aws_security_group" "allow_ssh_http" {
+   name        = "allow_ssh_http"
+   description = "Abir entrada ssh e http"
+   vpc_id      = "vpc-4f0a5228"
 
+   ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+   }
 
+   ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+   }
+   egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+   }
+  }
+  ```
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; O recurso acima,<a href="https://www.terraform.io/docs/providers/aws/r/security_group.html"> aws_security_group </a> , vai configurar o firewall para que permita a entrada nas portas 22 e 80, e permitir a saida em qualquer porta. 
