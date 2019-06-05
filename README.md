@@ -206,7 +206,36 @@
      location = "brazilsouth"
     }
     ```
-    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/resource_group.html">azurerm_resource_group</a> , vai criar um grupo de recurso.
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/resource_group.html">azurerm_resource_group</a> , criará um grupo de recurso.
     
     &nbsp;network_interface.tf:
+    ```
+    resource "azurerm_network_interface" "terraform-netint" {
+     name                      = "terraform-netint"
+     location                  = "${azurerm_resource_group.terraform-rg.location}"
+     resource_group_name       = "${azurerm_resource_group.terraform-rg.name}"
+     network_security_group_id = "${azurerm_network_security_group.terraform-sg.id}"
+
+     ip_configuration {
+      name                          = "testconf"
+      subnet_id                     = "${azurerm_subnet.terraform-subnet.id}"
+      private_ip_address_allocation = "Dynamic"
+      public_ip_address_id          = "${azurerm_public_ip.terraform-publicip.id}"
+     }
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/network_interface.html"> azurerm_network_interface </a>, criará uma interface de rede para a maquina virtual.
     
+    &nbsp;public_ip.tf:
+    ```
+    resource "azurerm_public_ip" "terraform-publicip" {
+     name                = "terraform-puclicip"
+     location            = "${azurerm_resource_group.terraform-rg.location}"
+     resource_group_name = "${azurerm_resource_group.terraform-rg.name}"
+     allocation_method   = "Static"
+     domain_name_label   = "terraform"
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/public_ip.html"> azurerm_public_ip </a> , criará um ip público.
+    
+    &nbsp;public_ip.tf:
