@@ -292,7 +292,7 @@
     ```
     O recurso acima,<a href="https://www.terraform.io/docs/providers/azurerm/r/virtual_network.html"> azurerm_virtual_network </a> , criará uma rede virtual.
     
-    <b>3. Usar o Terraform no terminal</b> <br>
+    <u>3. Usar o Terraform no terminal</u> <br>
     &nbsp;3.1. No mesmo diretorio aonde você criou seus arquivos digite os seguites comandos
     <ul>
     <li><a href="https://www.terraform.io/docs/commands/plan.html">terraform plan</a></li>
