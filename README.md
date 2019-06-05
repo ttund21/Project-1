@@ -55,6 +55,8 @@
    
    2.2. Agora devemos começar a criar as <i> maquinas virtuais e suas dependencias</i>: <br>
     &nbsp; 2.2.1. Google Cloud: 
+    
+    &nbsp;&nbsp;vminstance.tf:
     ```
     resource "google_compute_instance" "ProjetoTerraform" {
      name         = "projterra-vm-1"
@@ -75,8 +77,32 @@
     }
 
     ```
-    O recurso acima <a href="https://www.terraform.io/docs/providers/google/r/compute_instance.html">google_compute_instance</a> irá criar uma maquina virtual na Google Cloud.
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/google/r/compute_instance.html">google_compute_instance</a> , irá criar uma maquina virtual na Google Cloud.
     
+    &nbsp;&nbsp;metadata.tf:
+    ```
+    resource "google_compute_project_metadata_item" "user" {
+     key   = "ssh-keys"
+     value = "User:${file("~/.ssh/id_rsa.pub")}" 
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/google/r/compute_project_metadata_item.html"> google_compute_project_metadata_item </a> , ele vai exportar sua chave pública para a maquina virtual criada.
+    
+     &nbsp;&nbsp;firewall.tf:
+     ```
+     resource "google_compute_firewall" "firewall" {
+      name    = "allowhttp"
+      network = "default"
+  
+      allow {
+       protocol = "tcp"
+       ports    = ["80"]
+      }
+     }
+
+     ```
+     O recurso acima, <a href="https://www.terraform.io/docs/providers/google/r/compute_firewall.html"> google_compute_firewall </a> , vai habilitar o no firewall o trafego na porta 80.
+
     
 
 
