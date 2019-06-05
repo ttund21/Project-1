@@ -23,7 +23,7 @@
      <li> <a href="http://ebasso.net/wiki/index.php?title=Ansible:_Instalando_e_Configurando_o_Ansible"> Guia de Instalação do Ansible </a> </li>
    </ul>
    
-2. Começar a usar o Terraform: <br>
+2. Começar a escrever seu código no Terraform: <br>
   2.1. Primeiro devemos criar o nosso arquivo <i >main.tf </i> que vai nós dar acesso ao Terraform à nossa Cloud.  
    &nbsp;<b>2.1.1. Google Cloud:</b>
    ```
@@ -238,4 +238,58 @@
     ```
     O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/public_ip.html"> azurerm_public_ip </a> , criará um ip público.
     
-    &nbsp;public_ip.tf:
+    &nbsp;security_group.tf:
+    ```
+    resource "azurerm_network_security_group" "terraform-sg" {
+     name                = "terraform-sg"
+     location            = "${azurerm_resource_group.terraform-rg.location}"
+     resource_group_name = "${azurerm_resource_group.terraform-rg.name}"
+     
+     security_rule {
+      name                       = "HTTP"
+      priority                   = 100
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "80"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+     }
+     
+     security_rule {
+      name                       = "SSH"
+      priority                   = 101
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "22"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+     }
+    }
+    ```
+    &nbsp;subnet.tf:
+    ```
+    resource "azurerm_subnet" "terraform-subnet" {
+     name                 = "terraform-subnet"
+     virtual_network_name = "${azurerm_virtual_network.terraform-vnet.name}"
+     resource_group_name  = "${azurerm_resource_group.terraform-rg.name}"
+     address_prefix       = "10.0.2.0/24"
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/subnet.html"> azurerm_subnet </a> ,  criará uma sub-rede.
+    
+    &nbsp;virtual_network.tf:
+    ```
+    resource "azurerm_virtual_network" "terraform-vnet" {
+     name                = "terraform-vnet"
+     location            = "${azurerm_resource_group.terraform-rg.location}"
+     resource_group_name = "${azurerm_resource_group.terraform-rg.name}"
+     address_space       = ["10.0.0.0/16"]
+    }
+    ```
+    O recurso acima,<a href="https://www.terraform.io/docs/providers/azurerm/r/virtual_network.html"> azurerm_virtual_network </a> , criará uma rede virtual. 
+    
+    
