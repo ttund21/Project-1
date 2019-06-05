@@ -25,7 +25,7 @@
    
 2. Começar a usar o Terraform: <br>
   2.1. Primeiro devemos criar o nosso arquivo <i >main.tf </i> que vai nós dar acesso ao Terraform à nossa Cloud.  
-   &nbsp;2.1.1. Google Cloud:  
+   &nbsp;<b>2.1.1. Google Cloud:</b>
    ```
     provider "google" { 
      credentials = "${file("Sua_credencial_da_conta_de_servico.json")}"
@@ -35,7 +35,7 @@
    ```
    Primeiro deve-se criar no seu console da google cloud um <a href="https://support.google.com/a/answer/7378726?hl=pt-BR">projeto e uma conta de serviço </a>, após criado você deve adicionar sua credencial .json na linha credentials e o nome do seu projeto na linha project. Após configurado o main.tf execute em seu terminal o comando <b> terraform init </b>, para que o terraform baixe os plugins do provider.
    
-   &nbsp; 2.1.2. AWS: 
+   &nbsp; <b>2.1.2. AWS:</b>
    ```
    provider "aws" {
     access_key = "Sua access key"
@@ -45,7 +45,7 @@
    ```
    Aqui você deve gerar <a href="https://docs.aws.amazon.com/pt_br/IAM/latest/UserGuide/id_credentials_access-keys.html"> uma chave de acesso </a> e prencher as linhas de acordo com as informções do arquivo .csv baixado. Após configurado o main.tf execute em seu terminal o comando <b> terraform init </b>, para que o terraform baixe os plugins do provider.
    
-   &nbsp; 2.1.3. Azure: 
+   &nbsp; <b>2.1.3. Azure:</b> 
    ```
    provider "azurerm" {
     version = "1.29.0"
@@ -54,9 +54,9 @@
    No azure para configurar o provider é um pouco diferente, primeiro você tem que <a href="https://docs.microsoft.com/pt-br/cli/azure/install-azure-cli?view=azure-cli-latest"> instalar a CLI do azure na sua maquina </a> , após a instalação você deve fazer o logon com terminal usando o comando <a href="https://docs.microsoft.com/pt-br/cli/azure/authenticate-azure-cli?view=azure-cli-latest"> az login </a> . Após fazer o login só adicionar uma versão linha version e usar o comando <b> terraform init </b>, para que o terraform baixe os plugins do provider.
    
    2.2. Agora devemos começar a criar as <i> maquinas virtuais e suas dependencias</i>: <br>
-    &nbsp; 2.2.1. Google Cloud:
+    &nbsp; <b>2.2.1. Google Cloud:</b>
     
-    &nbsp;&nbsp;<b>vminstance.tf:</b>
+    &nbsp;&nbsp;vminstance.tf:
     
     ```
     resource "google_compute_instance" "ProjetoTerraform" {
@@ -105,7 +105,7 @@
      ```
      O recurso acima, <a href="https://www.terraform.io/docs/providers/google/r/compute_firewall.html"> google_compute_firewall </a> , vai habilitar o no firewall o trafego na porta 80.
     
-    &nbsp;2.2.2. AWS:
+    &nbsp;<b>2.2.2. AWS:</b>
     
     &nbsp;ec2.tf:
     ```   
@@ -157,5 +157,56 @@
     }
    ```
     O recurso acima,<a href="https://www.terraform.io/docs/providers/aws/r/security_group.html"> aws_security_group </a> , vai configurar o firewall para que permita a entrada nas portas 22 e 80, e permitir a saida em qualquer porta.
+    
+    &nbsp;<b>2.2.2. Azure:</b>
+    
+    &nbsp;virtual_machine.tf:
+    ```
+    resource "azurerm_virtual_machine" "terraform-vm" {
+     name                  = "terraform-vm"
+     location              = "${azurerm_resource_group.terraform-rg.location}"
+     resource_group_name   = "${azurerm_resource_group.terraform-rg.name}"
+     vm_size               = "Standard_B1ls"
+     network_interface_ids = ["${azurerm_network_interface.terraform-netint.id}"]
 
- 
+     storage_image_reference {
+      publisher = "Canonical"
+      offer     = "UbuntuServer"
+      sku       = "16.04-LTS"
+      version   = "latest"
+    }
+
+     storage_os_disk {
+      name              = "terraform_osdisk"
+      caching           = "ReadWrite"
+      create_option     = "FromImage"
+      managed_disk_type = "Standard_LRS"
+    }
+
+    os_profile {
+      computer_name  = "terraform"
+      admin_username = "Damocles"
+    }
+
+    os_profile_linux_config {
+      disable_password_authentication = true
+      ssh_keys {
+        path     = "/home/Damocles/.ssh/authorized_keys"
+        key_data = "${file("~/.ssh/id_rsa.pub")}"
+      }
+     }
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/virtual_machine.html"> azurerm_virtual_machine </a> , vai subir uma maquina virtual no Azure.
+    
+    &nbsp;resource_group.tf:
+    ```   
+    resource "azurerm_resource_group" "terraform-rg" {
+     name     = "terraform-rg"
+     location = "brazilsouth"
+    }
+    ```
+    O recurso acima, <a href="https://www.terraform.io/docs/providers/azurerm/r/resource_group.html">azurerm_resource_group</a> , vai criar um grupo de recurso.
+    
+    &nbsp;network_interface.tf:
+    
