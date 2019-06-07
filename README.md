@@ -316,7 +316,18 @@
     ip_da_sua_maquina_virtual
     ```
     
-    &nbsp;4.2. Após a criação do inventario, ainda no diretorio criado para o ansible, vamos fazer um teste usando <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html">comando ad-hoc</a> com o <a href="https://docs.ansible.com/ansible/latest/modules/ping_module.html#ping-module"> modulo ping </a> para testar a comunicação com a maquina virtual.
+    &nbsp;4.2. Após a criação do inventario, ainda no diretorio criado para o ansible, vamos fazer um teste usando <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html">um comando ad-hoc</a> com o <a href="https://docs.ansible.com/ansible/latest/modules/ping_module.html#ping-module"> modulo ping </a> para testar a comunicação com a maquina virtual.
     ```
     ansible all -i hosts -m ping
     ```
+    Esse comando irá realizar um "ping" e se der tudo certo voltará esse mensagem:
+    ```
+    35.247.207.67 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+    }
+    ```
+    (<i>Caso seja sua primeira vez fazendo a conexão ssh, aparecerá uma mensagem antes, só aceitar.</i>)
