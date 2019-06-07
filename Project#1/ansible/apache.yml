@@ -1,6 +1,6 @@
 ---
 - name: Subindo uma aplicacao web
-  hosts: homo
+  hosts: webserver
 
   tasks:
   - name: Baixando o apache
