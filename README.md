@@ -302,5 +302,21 @@
      <li><a href="https://www.terraform.io/docs/commands/show.html"> terraform show </a></li>
      <i>Esse comando irá te mostrar as informações do que foi criado.</i>
     </ul>
+    <br>
        
-    <u>4. Orquestrando uma aplicação web com o Ansible.</u>
+    <u>4. Orquestrando uma aplicação web com o Ansible.</u> <br>
+    &nbsp;4.1. Primeiro devemos criar uma diretorio para o ansible, dentro desse diretorio devemos criar um arquivo chamado hosts, que vai ser o nosso <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html"> inventário </a> ,vai ser onde vai ser declarado os host-alvos e os nós.
+    ```
+    [WebServer]
+    192.168.1.2
+    ```
+    Acima há um exemplo de inventário, nesse exemplo temos "[WebServer]" que é um tag criada para o host-alvo "192.168.1.2". Então o que você tem que fazer é colocar ip da sua maquina e criar uma tag (<i>lembrando que o ip da sua maquina virtual você consegue usando terraform show no diretorio que vc criou os arquivos .tf</i>), exemplo:
+    ```
+    [nome_qualquer_da_sua_tag]
+    ip_da_sua_maquina_virtual
+    ```
+    
+    &nbsp;4.2. Após a criação do inventario, ainda no diretorio criado para o ansible, vamos fazer um teste usando <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html">comando ad-hoc</a> com o <a href="https://docs.ansible.com/ansible/latest/modules/ping_module.html#ping-module"> modulo ping </a> para testar a comunicação com a maquina virtual.
+    ```
+    ansible all -i hosts -m ping
+    ```
