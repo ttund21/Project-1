@@ -331,3 +331,20 @@
     }
     ```
     (<i>Caso seja sua primeira vez fazendo a conexão ssh, aparecerá uma mensagem antes, só aceitar.</i>)
+    
+    &nbsp;4.3. Criando um <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html">playbook</a>, os playbooks do ansible são escritos em YAML então como o Python ele tem que ser bem identado, o nosso playbook vai ser basico focado em orquestrar um apache para derivados do Debian.
+    ```
+    ---
+    - name: Subindo uma aplicacao web
+      hosts: webserver
+
+      tasks:
+      - name: Baixando o apache
+        apt: name=apache2 state=latest update_cache=yes
+
+      - name: Subindo Servico
+        service: name=apache2 state=started enabled=yes
+    
+      - name: Importando pagina
+        template: src=templates/index.html dest=/var/www/html/index.html 
+    ```
