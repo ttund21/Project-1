@@ -348,3 +348,23 @@
       - name: Importando pagina
         template: src=templates/index.html dest=/var/www/html/index.html 
     ```
+    Básicamente o playbook funciona usando o "<i>- name</i>" dando uma descrição, seguido de um processo. Na primeira linha:
+    ```
+    - name: Subindo uma aplicacao web
+      hosts: webserver
+    ```
+    Aqui o <i>host</i> ele vai referenciar a sua <b>tag</b> do arquivo hosts, anteriormente criado.
+    
+    Abaixo na parte das <i>tasks</i> é aonde vai ser criado as tarefas que vão ser executadas:
+    ```
+     tasks:
+      - name: Baixando o apache
+        apt: name=apache2 state=latest update_cache=yes
+
+      - name: Subindo Servico
+        service: name=apache2 state=started enabled=yes
+    
+      - name: Importando pagina
+        template: src=templates/index.html dest=/var/www/html/index.html
+    ```
+    Aqui vão ser executados 3 modulos, os modulos <a href="https://docs.ansible.com/ansible/latest/modules/apt_module.html#apt-module">apt</a>,<a href="https://docs.ansible.com/ansible/latest/modules/service_module.html#service-module"> service</a> e <a href="https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module">template</a>
