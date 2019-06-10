@@ -367,4 +367,12 @@
       - name: Importando pagina
         template: src=templates/index.html dest=/var/www/html/index.html
     ```
-    Aqui vão ser executados 3 modulos, os modulos <a href="https://docs.ansible.com/ansible/latest/modules/apt_module.html#apt-module">apt</a>,<a href="https://docs.ansible.com/ansible/latest/modules/service_module.html#service-module"> service</a> e <a href="https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module">template</a>
+    Aqui vão ser executados 3 modulos, os modulos <a href="https://docs.ansible.com/ansible/latest/modules/apt_module.html#apt-module">apt</a>,<a href="https://docs.ansible.com/ansible/latest/modules/service_module.html#service-module"> service</a> e <a href="https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module">template</a>.
+    
+    &nbsp;4.4. Executando o playbook, após a criação do playbook iremos executa-lo usando o segiunte comando:
+    ```
+    ansible-playbook -i hosts nome_do_seu_playbook.yml
+    ```
+    O comando <a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">ansible-playbook</a> é usado para executar os seus playbooks.
+    
+    5. Após isso você terá uma nuvem com uma maquina virtual rodando uma aplicação web, caso queira testar colo o ip da maquina no navegador ou teste pelo terminal.
