@@ -375,4 +375,4 @@
     ```
     O comando <a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">ansible-playbook</a> é usado para executar os seus playbooks.
     
-    5. Após isso você terá uma nuvem com uma maquina virtual rodando uma aplicação web, caso queira testar colo o ip da maquina no navegador ou teste pelo terminal.
+   <b> 5. Após isso você terá uma nuvem com uma maquina virtual rodando uma aplicação web, caso queira testar cole o ip da maquina no navegador ou teste pelo terminal.</b>
