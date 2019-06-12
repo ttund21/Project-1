@@ -3,7 +3,7 @@
 <b>Objetivos:</b>
 <ol>
   <li> Provisionar uma máquina virtual em três clouds diferentes.</li>
-  <li> Orquestrar uma aplicação web nas tres maquinas virtuais. </li>
+  <li> Orquestrar uma aplicação web nas três máquinas virtuais. </li>
 </ol>
 
 <b>Ferramentas usadas:</b>
@@ -17,7 +17,7 @@
 </ul>
 
 <b>Passo a Passo:</b>
-1.  Primeiro devemos fazer a instalaçao do Terraform e do Ansible. 
+1.  Primeiro devemos fazer a instalação do Terraform e do Ansible. 
    <ul>
      <li> <a href="http://blog.aeciopires.com/conhecendo-o-terraform/"> Guia de Instalação do Terraform </a> </li>
      <li> <a href="http://ebasso.net/wiki/index.php?title=Ansible:_Instalando_e_Configurando_o_Ansible"> Guia de Instalação do Ansible </a> </li>
@@ -53,7 +53,7 @@
    ```
    No azure para configurar o provider é um pouco diferente, primeiro você tem que <a href="https://docs.microsoft.com/pt-br/cli/azure/install-azure-cli?view=azure-cli-latest"> instalar a CLI do azure na sua maquina </a> , após a instalação você deve fazer o logon com terminal usando o comando <a href="https://docs.microsoft.com/pt-br/cli/azure/authenticate-azure-cli?view=azure-cli-latest"> az login </a> . Após fazer o login só adicionar uma versão linha version e usar o comando <b> terraform init </b>, para que o terraform baixe os plugins do provider.
    
-   2.2. Agora devemos começar a criar as <i> maquinas virtuais e suas dependencias</i>: <br>
+   2.2. Agora devemos começar a criar as <i> máquinas virtuais e suas dependencias</i>: <br>
     &nbsp; <b>2.2.1. Google Cloud:</b>
     
     &nbsp;&nbsp;vminstance.tf:
@@ -310,13 +310,13 @@
     [WebServer]
     192.168.1.2
     ```
-    Acima há um exemplo de inventário, nesse exemplo temos "[WebServer]" que é um tag criada para o host-alvo "192.168.1.2". Então o que você tem que fazer é colocar ip da sua maquina e criar uma tag (<i>lembrando que o ip da sua maquina virtual você consegue usando terraform show no diretorio que vc criou os arquivos .tf</i>), exemplo:
+    Acima há um exemplo de inventário, nesse exemplo temos "[WebServer]" que é um tag criada para o host-alvo "192.168.1.2". Então o que você tem que fazer é colocar ip da sua máquina e criar uma tag (<i>lembrando que o ip da sua máquina virtual você consegue usando terraform show no diretorio que vc criou os arquivos .tf</i>), exemplo:
     ```
     [nome_qualquer_da_sua_tag]
     ip_da_sua_maquina_virtual
     ```
     
-    &nbsp;4.2. Após a criação do inventario, ainda no diretorio criado para o ansible, vamos fazer um teste usando <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html">um comando ad-hoc</a> com o <a href="https://docs.ansible.com/ansible/latest/modules/ping_module.html#ping-module"> modulo ping </a> para testar a comunicação com a maquina virtual.
+    &nbsp;4.2. Após a criação do inventario, ainda no diretorio criado para o ansible, vamos fazer um teste usando <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html">um comando ad-hoc</a> com o <a href="https://docs.ansible.com/ansible/latest/modules/ping_module.html#ping-module"> módulo ping </a> para testar a comunicação com a maquina virtual.
     ```
     ansible all -i hosts -m ping
     ```
@@ -348,7 +348,7 @@
       - name: Importando pagina
         template: src=templates/index.html dest=/var/www/html/index.html 
     ```
-    Básicamente o playbook funciona usando o "<i>- name</i>" dando uma descrição, seguido de um processo. Na primeira linha:
+    Basicamente o playbook funciona usando o "<i>- name</i>" dando uma descrição, seguido de um processo. Na primeira linha:
     ```
     - name: Subindo uma aplicacao web
       hosts: webserver
@@ -369,10 +369,10 @@
     ```
     Aqui vão ser executados 3 modulos, os modulos <a href="https://docs.ansible.com/ansible/latest/modules/apt_module.html#apt-module">apt</a>,<a href="https://docs.ansible.com/ansible/latest/modules/service_module.html#service-module"> service</a> e <a href="https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module">template</a>.
     
-    &nbsp;4.4. Executando o playbook, após a criação do playbook iremos executa-lo usando o segiunte comando:
+    &nbsp;4.4. Executando o playbook, após a criação do playbook iremos executá-lo usando o seguinte comando:
     ```
     ansible-playbook -i hosts nome_do_seu_playbook.yml
     ```
     O comando <a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">ansible-playbook</a> é usado para executar os seus playbooks.
     
-   <b> 5. Após isso você terá uma nuvem com uma maquina virtual rodando uma aplicação web, caso queira testar cole o ip da maquina no navegador ou teste pelo terminal.</b>
+   <b> 5. Após isso você terá uma nuvem com uma máquina virtual rodando uma aplicação web, caso queira testar cole o ip da máquina no navegador ou teste pelo terminal.</b>
