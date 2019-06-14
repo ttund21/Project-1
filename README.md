@@ -378,4 +378,4 @@
     
    <b> 5. Após isso você terá uma nuvem com uma máquina virtual rodando uma aplicação web, caso queira testar cole o ip da máquina no navegador ou teste pelo terminal.</b>
    
-   <b> 6. Foi adicionado um shell script para automatizar o processo de execução de provisionamento e orquestração.</b>
+   <b> 6. Foi adicionado um shell script para automatizar o processo manual da execução do terraform e do ansible.</b>
