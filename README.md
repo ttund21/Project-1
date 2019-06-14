@@ -14,6 +14,7 @@
   <li> <a href=https://cloud.google.com/> Google Cloud </a> </li>
   <li> <a href=https://aws.amazon.com/> AWS </a> </li>
   <li> <a href=https://azure.microsoft.com/> Azure </a> </li>
+  <li>Shell Script, para automatizar a execução</li>
 </ul>
 
 <b>Passo a Passo:</b>
